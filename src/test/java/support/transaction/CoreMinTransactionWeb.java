@@ -7,13 +7,11 @@ import support.CoreWeb;
 
 import java.util.List;
 
-import static suporte.ExtentReport.escrevendoPassoManual;
 
 public class CoreMinTransactionWeb extends CoreWeb {
 
 
     protected static void listaIgualLista(List<String> key, String logKey, List<String> value, String logValue) {
-        escrevendoPassoManual("Validando a igualdade das listas '" + logKey + "' e '" + logValue + "'");
         compareListas(key, logKey, value, logValue);
         if (key.size() != value.size()) {
             throw new WebDriverException("A lista '" + logKey + "' possui tamanho '" + key.size() + "' e a lista '" + logValue + "' possui tamanho '" + value.size() + "'.");
@@ -29,12 +27,10 @@ public class CoreMinTransactionWeb extends CoreWeb {
     }
 
     protected static void listaContemLista(List<String> key, String logKey, List<String> value, String logValue) {
-        escrevendoPassoManual("Validando se a lista '" + logKey + "' contém a lista '" + logValue + "'");
         compareListas(key, logKey, value, logValue);
     }
 
     protected static void listaNaoContemLista(List<String> key, String logKey, List<String> value, String logValue) {
-        escrevendoPassoManual("Validando se a lista '" + logValue + "' não está presente na lista '" + logKey + "'");
         for (String k : key) {
             if (value.contains(k)) {
                 throw new WebDriverException("A lista '" + logKey + "' contém o elemento '" + k + "' que está presente na lista '" + logValue + "'.");

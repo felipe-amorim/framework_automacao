@@ -1,13 +1,11 @@
 package intern;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
-import suporte.Ambiente;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -56,7 +54,7 @@ public class Screenshot {
                 } catch (NoAlertPresentException ignored) {
                 }
                 if (!tinhaAlerta) {
-                    System.out.println("Carregamento da pagina: "+((JavascriptExecutor) Instances.getWebDriver()).executeScript("return document.readyState"));
+                    System.out.println("Carregamento da pagina: " + ((JavascriptExecutor) Instances.getWebDriver()).executeScript("return document.readyState"));
                     FileUtils.moveFile(((TakesScreenshot) Instances.getWebDriver()).getScreenshotAs(OutputType.FILE), screenshot);
                 }
 
@@ -80,34 +78,4 @@ public class Screenshot {
             }
         }
     }
-
-    /*public void printAppium() {
-        File screenshot = null;
-        String scenarioName = cleanText(Instances.getScenario());
-        String featureName = cleanText(Instances.getFeature());
-        String stepName = cleanText(Instances.getStep());
-        String screenshotPath = Instances.getJenkinsEvidencesPath() + featureName + "/" + scenarioName + "/";
-        int filesCount = 1;
-        File pathEvidenciasReport = new File(screenshotPath);
-        pathEvidenciasReport.mkdirs();
-        while (true) {
-            File f = new File(screenshotPath + stepName + "_" + filesCount + ".png");
-            if (!f.exists()) {
-                break;
-            }
-            filesCount++;
-        }
-        screenshot = new File(screenshotPath + stepName + "_" + filesCount + ".png");
-        try {
-            FileUtils.moveFile(((TakesScreenshot) Instances.getAndroidDriver()).getScreenshotAs(OutputType.FILE), screenshot);
-            Instances.setScreenShotLocation("../evidencias/" + featureName + "/" + scenarioName + "/" + stepName + "_" + filesCount + ".png");
-            System.out.println("Screenshot count: " + stepName + "_" + filesCount + ".png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (WebDriverException e){
-            if(e.getMessage().contains("ocalhost/0:0:0:0:0:")){
-                Instances.getReportClassInstance().stepFatal(e);
-            }
-        }
-    }*/
 }

@@ -90,9 +90,9 @@ public class Instances {
     public static String androidLastUdid = "";
     public static String mongoCategoryOfExecution = "desenv";
     public static String mongoNameOfProject = "null";
-    protected static String scenario = "";
+    public static String scenario = "";
     protected static String feature = "";
-    protected static String step = "";
+    public static String step = "";
     static JSONObject mongoActualStep = null;
     static boolean tevePasso = false;
     private static Throwable lastException = null;
@@ -1799,7 +1799,7 @@ public class Instances {
 
                 mongoClient = new MongoClient(new MongoClientURI(connectionStatementAuth+connectionStatementClusters+"/?authSource="+jsonConfig.getJSONObject("mongo").get("user").toString()+"&ssl=true"));
                 databaseRelatorios = mongoClient.getDatabase(jsonConfig.getJSONObject("mongo").get("main_database").toString());
-                //System.out.println("CATEGORIA: "+mongoCategoryOfExecution);
+                System.out.println("CATEGORIA: "+mongoCategoryOfExecution);
                 if (mongoCategoryOfExecution.equals("prod")) {
                     //System.out.println("dentro if");
                     collectionDesenv = databaseRelatorios.getCollection(jsonConfig.getJSONObject("mongo").get("main_collection").toString());

@@ -9,8 +9,8 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/",
         glue={"produtos"},
-        plugin = { "intern.plugin.ListCucumber" }
+        plugin = { "intern.plugin.ListCucumberDesenv" }
 )
 
-public class Run {
+public class RunDesenv {
 }

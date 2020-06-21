@@ -11,7 +11,7 @@ public class Report {
         return "";
     }
 
-    void createBDD(String bdd){
+    public void createBDD(String bdd){
         if(!Instances.tevePasso&&Instances.getExtent()!=null&&Instances.getBddSection()!=null){
             Instances.getBddSection().skip("Bdd sem execução");
         }
