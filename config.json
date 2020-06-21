@@ -1,0 +1,14 @@
+{
+  "projeto": "",
+  "mongo": {
+    "clusters": [
+      "",
+      "",
+      ""
+    ],
+    "user": "",
+    "password": "",
+    "main_database": "",
+    "main_collection": ""
+  }
+}
