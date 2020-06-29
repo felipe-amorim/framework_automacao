@@ -463,11 +463,11 @@ public class Instances {
         Instances.lastWindows = lastWindows;
     }
 
-    public static boolean getResetPageLoad() {
+    public static boolean getPageLoad() {
         return resetPageLoad;
     }
 
-    public static void setResetPageLoad(boolean resetPageLoad) {
+    public static void setPageLoad(boolean resetPageLoad) {
         Instances.resetPageLoad = resetPageLoad;
     }
 

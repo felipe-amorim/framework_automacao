@@ -20,12 +20,11 @@ public class LocatorWeb {
             }
         }
         int tempoDeEspera = Instances.getDefaultWaitMilis();
-        String estadoDaPagina = String.valueOf(((JavascriptExecutor) Instances.getWebDriver()).executeScript("return document.readyState"));
-        if(estadoDaPagina.equals("complete")){
-            if (!Instances.getResetPageLoad()){
+
+        if (Instances.getPageLoad()){
+            String estadoDaPagina = String.valueOf(((JavascriptExecutor) Instances.getWebDriver()).executeScript("return document.readyState"));
+            if(estadoDaPagina.equals("complete")){
                 tempoDeEspera = 1000;
-            } else {
-                Instances.setResetPageLoad(false);
             }
         }
 
