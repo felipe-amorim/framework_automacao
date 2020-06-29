@@ -1,4 +1,4 @@
-package support.transaction;
+package depreciated;
 
 import intern.Instances;
 import org.openqa.selenium.WebDriverException;

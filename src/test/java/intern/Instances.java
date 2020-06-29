@@ -49,12 +49,14 @@ import support.db.SetDb;
 import support.db.TypeDB;
 import support.error.Error;
 import support.log.Log;
+import support.rest.*;
 import support.screen.driver.Screen;
 import support.screen.find.ActionsScreen;
 import support.screen.find.ClicksScreen;
 import support.screen.find.MoveScreen;
 import support.screen.find.SendsScreen;
 import support.screen.sleep.SleepScreen;
+import support.tbi.JRobot;
 import support.web.ScrollWeb;
 import support.web.driver.WebDriver;
 import support.web.driver.*;
@@ -157,6 +159,15 @@ public class Instances {
     private static GetterActionsAndroid getterActionsAndroidClassInstance = null;
     private static JRobot jRobotClassInstance = null;
     private static SleepScreen sleepScreenClassInstance = null;
+    private static BodyREST bodyRESTClassInstance = null;
+    private static HeadersREST headersRESTClassInstance = null;
+    private static ParametersREST parametersRESTClassInstance = null;
+    private static ResponseBodyREST responseBodyRESTClassInstance = null;
+    private static ResponseResponseTimeREST responseResponseTimeRESTClassInstance = null;
+    private static ResponseREST responseRESTClassInstance = null;
+    private static ResponseStatusREST responseStatusRESTClassInstance = null;
+    private static SendREST sendRESTClassInstance = null;
+    private static TypeOfREST typeOfRESTClassInstance = null;
     private static String dbuser = "";
     private static String dbpassword = "";
     private static String dbtnsnames = "";
@@ -180,6 +191,7 @@ public class Instances {
     private static boolean slow = false;
     private static long executionActionTimer = 0;
     private static long executionStartTimer = 0;
+    private static boolean resetPageLoad = false;
     private static int defaultWaitMilisBackUp = 10000;
     private static int defaultWaitMilis = 10000;
     private static org.sikuli.script.Screen screenSikuli = null;
@@ -303,6 +315,17 @@ public class Instances {
     private static String messageAssertContains = "Validando que o texto 'arg0' continha o texto 'arg1'";
     private static String messageAssertStartsWith = "Validando que o texto 'arg0' começava com o texto 'arg1'";
     private static String messageAssertEndsWith = "Validando que o texto 'arg0' começava com o texto 'arg1'";
+    private static String messageRESTStatusError = "O status de resposta esperado era: 'arg0' e o recebido foi: 'arg1'";
+    private static String messageRESTStatusSuccess = "Validando o status de resposta como: 'arg0'";
+    private static String messageRESTResponseNull = "O corpo de resposta estava vazio";
+    private static String messageRESTResponseNotContains = "O corpo de resposta não continha a chave: 'arg0'";
+    private static String messageRESTResponseContains = "Validando que o corpo de resposta contém a chave: 'arg0'";
+    private static String messageRESTResponseTimeLessThan = "O tempo minimo esperado para a requisição era: 'arg0' e o tempo consumido foi: 'arg1'";
+    private static String messageRESTResponseTimeOK = "Validando que o tempo de resposta foi menor ou igual a: 'arg0'";
+    private static String messageRESTSendRequest = "Enviando request para o URI: 'arg0', com o endpoint: 'arg1'";
+    private static String messageRESTSendParameter = "Adicionando o parametro key: 'arg0' e chave: 'arg1'";
+    private static String messageRESTSendHeader = "Adicionando o header key: 'arg0' e chave: 'arg1'";
+    private static String messageRESTSendToken = "Adicionando o token: 'arg1'";
     private static int mongoScenarioFailCount = 0;
     private static int mongoScenarioWarningCount = 0;
     private static int mongoScenarioFatalCount = 0;
@@ -337,6 +360,16 @@ public class Instances {
     private static boolean mongoConnected = false;
     private static List<Runnable> mongoObjectsQueue = new ArrayList<>();
     private static boolean interruptMongo = false;
+    private static String restLastURI = "";
+    private static String restLastEndPoint = "";
+    private static List<JSONObject> restLastResponse = new ArrayList<>();
+    private static int restLastStatus = 0;
+    private static int restLastResponseTime = 0;
+    private static HashMap<String, String> restLastParameters = new HashMap<>();
+    private static HashMap<String, String> restLastHeaders = new HashMap<>();
+    private static String restLastToken = "";
+    private static String restLastTypeOfRequest = "";
+    private static JSONObject restLastBody = new JSONObject();
 
     public static Throwable getLastException() {
         return lastException;
@@ -422,6 +455,14 @@ public class Instances {
 
     public static void setLastWindows(Set<String> lastWindows) {
         Instances.lastWindows = lastWindows;
+    }
+
+    public static boolean getResetPageLoad() {
+        return resetPageLoad;
+    }
+
+    public static void setResetPageLoad(boolean resetPageLoad) {
+        Instances.resetPageLoad = resetPageLoad;
     }
 
     public static Iterator<String> getLastIeratos() {
@@ -1112,6 +1153,157 @@ public class Instances {
             assertThatClassInstance = new AssertThat();
         }
         return assertThatClassInstance;
+    }
+
+    public static BodyREST getBodyRESTClassInstance() {
+        if (bodyRESTClassInstance == null) {
+            bodyRESTClassInstance = new BodyREST();
+        }
+        return bodyRESTClassInstance;
+    }
+
+    public static HeadersREST getHeadersRESTClassInstance() {
+        if (headersRESTClassInstance == null) {
+            headersRESTClassInstance = new HeadersREST();
+        }
+        return headersRESTClassInstance;
+    }
+
+    public static ParametersREST getParametersRESTClassInstance() {
+        if (parametersRESTClassInstance == null) {
+            parametersRESTClassInstance = new ParametersREST();
+        }
+        return parametersRESTClassInstance;
+    }
+
+    public static ResponseBodyREST getResponseBodyRESTClassInstance() {
+        if (responseBodyRESTClassInstance == null) {
+            responseBodyRESTClassInstance = new ResponseBodyREST();
+        }
+        return responseBodyRESTClassInstance;
+    }
+
+    public static ResponseResponseTimeREST getResponseResponseTimeRESTClassInstance() {
+        if (responseResponseTimeRESTClassInstance == null) {
+            responseResponseTimeRESTClassInstance = new ResponseResponseTimeREST();
+        }
+        return responseResponseTimeRESTClassInstance;
+    }
+
+    public static ResponseREST getResponseRESTClassInstance() {
+        if (responseRESTClassInstance == null) {
+            responseRESTClassInstance = new ResponseREST();
+        }
+        return responseRESTClassInstance;
+    }
+
+    public static ResponseStatusREST getResponseStatusRESTClassInstance() {
+        if (responseStatusRESTClassInstance == null) {
+            responseStatusRESTClassInstance = new ResponseStatusREST();
+        }
+        return responseStatusRESTClassInstance;
+    }
+
+    public static SendREST getSendRESTClassInstance() {
+        if (sendRESTClassInstance == null) {
+            sendRESTClassInstance = new SendREST();
+        }
+        return sendRESTClassInstance;
+    }
+
+    public static TypeOfREST getTypeOfRESTClassInstance() {
+        if (typeOfRESTClassInstance == null) {
+            typeOfRESTClassInstance = new TypeOfREST();
+        }
+        return typeOfRESTClassInstance;
+    }
+
+    public static String getRestLastURI() {
+        return restLastURI;
+    }
+
+    public static void setRestLastURI(String restLastURI) {
+        Instances.restLastURI = restLastURI;
+    }
+
+    public static String getRestLastEndPoint() {
+        return restLastEndPoint;
+    }
+
+    public static void setRestLastEndPoint(String restLastEndPoint) {
+        Instances.restLastEndPoint = restLastEndPoint;
+    }
+
+    public static List<JSONObject> getRestLastResponse() {
+        return restLastResponse;
+    }
+
+    public static void setRestLastResponse(List<JSONObject> restLastResponse) {
+        Instances.restLastResponse = restLastResponse;
+    }
+
+    public static int getRestLastStatus() {
+        return restLastStatus;
+    }
+
+    public static void setRestLastStatus(int restLastStatus) {
+        Instances.restLastStatus = restLastStatus;
+    }
+
+    public static int getRestLastResponseTime() {
+        return restLastResponseTime;
+    }
+
+    public static void setRestLastResponseTime(int restLastResponseTime) {
+        Instances.restLastResponseTime = restLastResponseTime;
+    }
+
+    public static HashMap<String, String> getRestLastParameters() {
+        return restLastParameters;
+    }
+
+    public static void putRestLastParameters(String key, String value){
+        restLastParameters.put(key, value);
+    }
+
+    public static void setRestLastParameters(HashMap<String, String> restLastParameters) {
+        Instances.restLastParameters = restLastParameters;
+    }
+
+    public static HashMap<String, String> getRestLastHeaders() {
+        return restLastHeaders;
+    }
+
+    public static void putRestLastHeaders(String key, String value){
+        restLastHeaders.put(key, value);
+    }
+
+    public static void setRestLastHeaders(HashMap<String, String> restLastHeaders) {
+        Instances.restLastHeaders = restLastHeaders;
+    }
+
+    public static String getRestLastToken() {
+        return restLastToken;
+    }
+
+    public static void setRestLastToken(String restLastToken) {
+        Instances.restLastToken = restLastToken;
+    }
+
+    public static String getRestLastTypeOfRequest() {
+        return restLastTypeOfRequest;
+    }
+
+    public static void setRestLastTypeOfRequest(String restLastTypeOfRequest) {
+        Instances.restLastTypeOfRequest = restLastTypeOfRequest;
+    }
+
+    public static JSONObject getRestLastBody() {
+        return restLastBody;
+    }
+
+    public static void setRestLastBody(JSONObject restLastBody) {
+        Instances.restLastBody = restLastBody;
     }
 
     public static String getAndroidDeviceName() {
@@ -1826,11 +2018,10 @@ public class Instances {
 
     public static void veriifyAndReplaceOldProdDoc() {
         String startTime = new SimpleDateFormat("dd MMM yyyy").format(new Date());
-
+        System.out.println("DATA: "+startTime);
         Bson filter = Filters.and(
                 Filters.regex("startTime", ".*" + startTime + ".*"),
-                Filters.eq("usuario", "automacao"),
-                Filters.eq("categoria", "prod"),
+                Filters.eq("ambiente.categoria", "prod"),
                 Filters.eq("project", Instances.mongoNameOfProject)
         );
 
@@ -2143,6 +2334,50 @@ public class Instances {
 
     public static String getMessageAssertEndsWith() {
         return messageAssertEndsWith;
+    }
+
+    public static String getMessageRESTStatusError() {
+        return messageRESTStatusError;
+    }
+
+    public static String getMessageRESTStatusSuccess() {
+        return messageRESTStatusSuccess;
+    }
+
+    public static String getMessageRESTResponseNull() {
+        return messageRESTResponseNull;
+    }
+
+    public static String getMessageRESTResponseNotContains() {
+        return messageRESTResponseNotContains;
+    }
+
+    public static String getMessageRESTResponseContains() {
+        return messageRESTResponseContains;
+    }
+
+    public static String getMessageRESTResponseTimeLessThan() {
+        return messageRESTResponseTimeLessThan;
+    }
+
+    public static String getMessageRESTResponseTimeOK() {
+        return messageRESTResponseTimeOK;
+    }
+
+    public static String getMessageRESTSendRequest() {
+        return messageRESTSendRequest;
+    }
+
+    public static String getMessageRESTSendParameter() {
+        return messageRESTSendParameter;
+    }
+
+    public static String getMessageRESTSendHeader() {
+        return messageRESTSendHeader;
+    }
+
+    public static String getMessageRESTSendToken() {
+        return messageRESTSendToken;
     }
 
     public static String getMessageInterrupt() {

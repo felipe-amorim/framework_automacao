@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
         features = "src/test/",
         glue={"produtos"},
         plugin = { "intern.plugin.ListCucumberDesenv" }
+        ,tags = {"@REST"}
 )
 
 public class RunDesenv {
