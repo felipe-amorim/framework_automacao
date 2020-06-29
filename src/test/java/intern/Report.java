@@ -38,6 +38,23 @@ public class Report {
         Instances.setScreenShotLocation("");
     }
 
+    public void stepMarkUp(Markup step){
+        Instances.tevePasso = true;
+        Instances.getBddSection().info(step);
+        long executionTime = Instances.getExecutionActionTimer();
+        System.out.println("Ação: "+step);
+        System.out.println("Tempo decorrido: "+ executionTime +" ms");
+        System.out.println("---------------------------------------------------------------------------------------");
+
+        Instances.mongoActualStep = new JSONObject()
+                .put("acao", step)
+                .put("status", "info")
+                .put("tempoDecorrido", executionTime);
+        Instances.mongoStep("pass");
+        Instances.flushReportAndMongo();
+        Instances.setScreenShotLocation("");
+    }
+
     public void stepInfo(String step){
         Instances.tevePasso = true;
         Instances.getBddSection().info(step);

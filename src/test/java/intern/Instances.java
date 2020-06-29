@@ -319,7 +319,13 @@ public class Instances {
     private static String messageRESTStatusSuccess = "Validando o status de resposta como: 'arg0'";
     private static String messageRESTResponseNull = "O corpo de resposta estava vazio";
     private static String messageRESTResponseNotContains = "O corpo de resposta não continha a chave: 'arg0'";
+    private static String messageRESTResponseNotContainsKeyAndValue = "O corpo de resposta não continha a chave: 'arg0' com o valor: 'arg1'";
     private static String messageRESTResponseContains = "Validando que o corpo de resposta contém a chave: 'arg0'";
+    private static String messageRESTResponseContainsKeyAndValue = "Validando que o corpo de resposta contém a chave: 'arg0' e o valor: 'arg1'";
+    private static String messageRESTResponseEquals = "Validando que o corpo de resposta é igual a:";
+    private static String messageRESTResponseNotEqualsMessage = "O corpo de resposta estava incorreto";
+    private static String messageRESTResponseNotEquals = "O corpo de resposta esperado era:";
+    private static String messageRESTResponseNotEquals2 = "O corpo de resposta recebido foi:";
     private static String messageRESTResponseTimeLessThan = "O tempo minimo esperado para a requisição era: 'arg0' e o tempo consumido foi: 'arg1'";
     private static String messageRESTResponseTimeOK = "Validando que o tempo de resposta foi menor ou igual a: 'arg0'";
     private static String messageRESTSendRequest = "Enviando request para o URI: 'arg0', com o endpoint: 'arg1'";
@@ -2354,6 +2360,30 @@ public class Instances {
 
     public static String getMessageRESTResponseContains() {
         return messageRESTResponseContains;
+    }
+
+    public static String getMessageRESTResponseEquals() {
+        return messageRESTResponseEquals;
+    }
+
+    public static String getMessageRESTResponseNotEquals() {
+        return messageRESTResponseNotEquals;
+    }
+
+    public static String getMessageRESTResponseNotEquals2() {
+        return messageRESTResponseNotEquals2;
+    }
+
+    public static String getMessageRESTResponseNotEqualsMessage() {
+        return messageRESTResponseNotEqualsMessage;
+    }
+
+    public static String getMessageRESTResponseNotContainsKeyAndValue() {
+        return messageRESTResponseNotContainsKeyAndValue;
+    }
+
+    public static String getMessageRESTResponseContainsKeyAndValue() {
+        return messageRESTResponseContainsKeyAndValue;
     }
 
     public static String getMessageRESTResponseTimeLessThan() {
